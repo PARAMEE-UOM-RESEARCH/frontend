@@ -3,7 +3,9 @@ import { Image, Layout, Menu, theme } from "antd";
 import { navItems } from "./helpers/helper";
 import TinySliderComponent from "./DashboardSubComponents/TinySlider";
 import GettingStarted from "./DashboardSubComponents/GettingStarted";
-const { Header, Content, Footer, Sider } = Layout;
+import Hotels from "./DashboardSubComponents/Hotels";
+
+const { Header, Content, Sider } = Layout;
 
 const UserDashboard = ({ location }) => {
   const {
@@ -44,7 +46,7 @@ const UserDashboard = ({ location }) => {
           defaultSelectedKeys={["1"]}
           items={navItems}
           onSelect={handleMenuItems}
-          className=" mt-10"
+          className=" mt-10 h-dvh"
         />
       </Sider>
       <Layout>
@@ -55,10 +57,21 @@ const UserDashboard = ({ location }) => {
           }}
         >
           <div
-            className=" text-3xl mt-3 text-center text-[#650D26] font-bold"
+            className="text-3xl mt-3 text-center text-[#650D26] font-bold"
             style={{ fontFamily: "Montserrat Alternates" }}
           >
             InstaStay Hotel Management System
+            <sup
+              className="text-sm align-top ml-1"
+              style={{
+                color: "#FF5733",
+                fontSize: "0.75em",
+                marginLeft: "8px",
+                verticalAlign: "super",
+              }}
+            >
+              {location.countryCode}
+            </sup>
           </div>
         </Header>
         <Content
@@ -77,18 +90,13 @@ const UserDashboard = ({ location }) => {
                 <GettingStarted handleFocus={handleFocus} />
                 <TinySliderComponent ref={getStartedRef} />
               </>
+            ) : menuItem == 2 ? (
+              <Hotels location={location} />
             ) : (
               <></>
             )}
           </div>
         </Content>
-        <Footer
-          style={{
-            textAlign: "center",
-          }}
-        >
-          Design ©{new Date().getFullYear()} Created by InstaStay
-        </Footer>
       </Layout>
     </Layout>
   );

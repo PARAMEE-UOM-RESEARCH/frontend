@@ -16,7 +16,7 @@ const GettingStarted = ({ handleFocus }) => {
         <p className="text-lg text-white mb-6">
           The ultimate hotel management system designed to streamline your
           operations. From booking management to guest services, InstaStay
-          simplifies every aspect of running a hotel.
+          simplifies every aspect of running a hotel with power of AI.
         </p>
         <button
           className="px-6 py-3 bg-blue-500 text-white font-bold text-lg rounded shadow-lg hover:bg-blue-600 transition duration-300"

@@ -11,9 +11,12 @@ export const handleGetLocation = (setLocation, setErrorMessage) => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        const countryCode = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
         setLocation({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
+          countryCode,
         });
         setErrorMessage("");
       },
