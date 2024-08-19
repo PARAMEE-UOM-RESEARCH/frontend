@@ -1,25 +1,28 @@
-import React from "react";
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
-import { Layout, Menu, theme } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import { Image, Layout, Menu, theme } from "antd";
+import { navItems } from "./helpers/helper";
+import TinySliderComponent from "./DashboardSubComponents/TinySlider";
+import GettingStarted from "./DashboardSubComponents/GettingStarted";
 const { Header, Content, Footer, Sider } = Layout;
-const items = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  UserOutlined,
-].map((icon, index) => ({
-  key: String(index + 1),
-  icon: React.createElement(icon),
-  label: `nav ${index + 1}`,
-}));
-const UserDashboard = () => {
+
+const UserDashboard = ({ location }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const [menuItem, setMenuItem] = useState("1");
+  const getStartedRef = useRef();
+
+  useEffect(() => {}, []);
+
+  const handleMenuItems = ({ key }) => {
+    setMenuItem(key);
+  };
+
+  const handleFocus = () => {
+    getStartedRef.current?.focus();
+    getStartedRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <Layout>
       <Sider
@@ -31,13 +34,17 @@ const UserDashboard = () => {
         onCollapse={(collapsed, type) => {
           console.log(collapsed, type);
         }}
+        className=" h-auto"
       >
         <div className="demo-logo-vertical" />
+        <Image src="https://i.ibb.co/5nhZ75K/99dc640e-21ac-45fd-bfed-2e61f0d198a2-removebg-preview.png" />
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["4"]}
-          items={items}
+          defaultSelectedKeys={["1"]}
+          items={navItems}
+          onSelect={handleMenuItems}
+          className=" mt-10"
         />
       </Sider>
       <Layout>
@@ -61,13 +68,18 @@ const UserDashboard = () => {
         >
           <div
             style={{
-              padding: 24,
-              minHeight: 360,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}
           >
-            content
+            {menuItem == 1 ? (
+              <>
+                <GettingStarted handleFocus={handleFocus} />
+                <TinySliderComponent ref={getStartedRef} />
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </Content>
         <Footer
@@ -75,7 +87,7 @@ const UserDashboard = () => {
             textAlign: "center",
           }}
         >
-           Design ©{new Date().getFullYear()} Created by InstaStay 
+          Design ©{new Date().getFullYear()} Created by InstaStay
         </Footer>
       </Layout>
     </Layout>

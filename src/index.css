@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.tns-outer [data-action="stop"] {
+  display: none !important;
+}
