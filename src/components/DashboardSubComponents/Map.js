@@ -50,7 +50,7 @@ function Map({ onLocationChange = () => {}, hotel = null, menuItem = "" }) {
       setSelectedLocation(newLocation); // Set the destination point
     }
 
-    onLocationChange({ startLocation, destination: selectedLocation });
+    onLocationChange({ lat, lng });
   };
 
   const calculateRoute = () => {

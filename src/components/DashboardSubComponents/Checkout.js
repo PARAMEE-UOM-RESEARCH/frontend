@@ -21,13 +21,13 @@ export const Checkout = ({ menuItem, profile }) => {
     hotel?.main_photo_url ?? ""
   );
   const _id = useLocalStorageListner("fav")?.find(
-    (fav) => fav.hotel.hotel_id === hotel.hotel_id
+    (fav) => fav.hotel.hotel_id === hotel?.hotel_id
   )?._id;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isFavorite, setIsFavorite] = useState(
     useLocalStorageListner("fav")?.some(
-      (fav) => fav.hotel.hotel_id === hotel.hotel_id
+      (fav) => fav.hotel.hotel_id === hotel?.hotel_id
     )
   );
 
@@ -142,15 +142,17 @@ export const Checkout = ({ menuItem, profile }) => {
         )}
       </div>
 
-      <center>
-        <Button
-          onClick={() => setIsModalVisible(true)}
-          className="flex items-center bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300 ease-in-out"
-          icon={<ShoppingCartOutlined className="mr-2" />}
-        >
-          Proceed to Checkout
-        </Button>
-      </center>
+      {hotel && (
+        <center>
+          <Button
+            onClick={() => setIsModalVisible(true)}
+            className="flex items-center bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300 ease-in-out"
+            icon={<ShoppingCartOutlined className="mr-2" />}
+          >
+            Proceed to Checkout
+          </Button>
+        </center>
+      )}
     </div>
   );
 };

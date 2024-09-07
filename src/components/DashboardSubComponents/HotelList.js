@@ -171,7 +171,7 @@ const HotelList = ({ hotels, isLoading, profile, setMenuItem, type }) => {
         `${REACT_APP_BASE_URL}/recommendation/`,
         {
           text: JSON.stringify(selectedHotel),
-          userName: profile.name,
+          userName: profile?.name ?? "User",
         }
       );
       setRecommendation(data);

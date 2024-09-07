@@ -53,7 +53,7 @@ const Hotels = ({ location, profile, setMenuItem, type = "" }) => {
 
   useEffect(() => {
     fetchHotels();
-  }, [fetchHotels]);
+  }, [fetchHotels, locObj]);
 
   const handleLocationChange = ({ lat, lng }) => {
     setLocObj({ latitude: lat, longitude: lng });
