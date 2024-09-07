@@ -5,3 +5,7 @@
 .tns-outer [data-action="stop"] {
   display: none !important;
 }
+
+.rcw-picker-btn {
+  display: none !important;
+}
