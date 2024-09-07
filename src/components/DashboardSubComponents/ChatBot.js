@@ -55,7 +55,7 @@ const ChatBot = ({ isDeleted, setIsDeleted = () => {}, profile }) => {
         resizable={true}
         markAllAsRead
         showBadge={false}
-        emojis={true}
+        emojis={false}
         launcherOpenImg={"https://i.ibb.co/2WH8sKP/bot.png"}
         launcherCloseImg={"https://i.ibb.co/8B4kGnB/close.png"}
       />
