@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Image, Layout, Menu, theme } from "antd";
+import { Button, Image, Layout, Menu, theme } from "antd";
 import { navItems } from "./helpers/helper";
 import TinySliderComponent from "./DashboardSubComponents/TinySlider";
 import GettingStarted from "./DashboardSubComponents/GettingStarted";
 import Hotels from "./DashboardSubComponents/Hotels";
+import { useLocalStorageListner } from "./customHooks/useLocalStorageListner";
+import { Checkout } from "./DashboardSubComponents/Checkout";
+import FavouritePlaces from "./DashboardSubComponents/FavouritePlaces";
 
 const { Header, Content, Sider } = Layout;
 
@@ -25,6 +28,9 @@ const UserDashboard = ({ location }) => {
     getStartedRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const profile = useLocalStorageListner("profile");
+  console.log("profile", profile);
+
   return (
     <Layout>
       <Sider
@@ -44,9 +50,10 @@ const UserDashboard = ({ location }) => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          items={navItems}
+          items={profile ? navItems : navItems.slice(0, 3)}
           onSelect={handleMenuItems}
           className=" mt-10 h-dvh"
+          selectedKeys={menuItem}
         />
       </Sider>
       <Layout>
@@ -72,6 +79,25 @@ const UserDashboard = ({ location }) => {
             >
               {location.countryCode}
             </sup>
+            {profile && (
+              <div className=" float-end">
+                <span className=" text-sm cursor-pointer"><u>Admin Login</u></span>&nbsp;&nbsp;
+                <Image
+                  src={profile.picture}
+                  width={40}
+                  height={40}
+                  className=" float-end"
+                  title={"Logged in as " + profile.name}
+                />
+                &nbsp;&nbsp;
+                <Button
+                  className=" float-end"
+                  onClick={() => localStorage.clear()}
+                >
+                  Logout
+                </Button>
+              </div>
+            )}
           </div>
         </Header>
         <Content
@@ -91,7 +117,22 @@ const UserDashboard = ({ location }) => {
                 <TinySliderComponent ref={getStartedRef} />
               </>
             ) : menuItem == 2 ? (
-              <Hotels location={location} />
+              <Hotels
+                location={location}
+                profile={profile}
+                setMenuItem={setMenuItem}
+              />
+            ) : menuItem == 3 ? (
+              <Hotels
+                location={location}
+                profile={profile}
+                setMenuItem={setMenuItem}
+                type={"restaurant"}
+              />
+            ) : menuItem == 4 ? (
+              <FavouritePlaces profile={profile} />
+            ) : menuItem == 5 ? (
+              <Checkout menuItem={menuItem} profile={profile} />
             ) : (
               <></>
             )}

@@ -13,6 +13,10 @@ export const handleGetLocation = (setLocation, setErrorMessage) => {
       (position) => {
         const countryCode = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
+        const { latitude, longitude } = position.coords;
+        // const currentLocation = new window.google.maps.LatLng(latitude, longitude);
+        // console.log("currLOc", currentLocation.lat())
+
         setLocation({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -110,3 +114,7 @@ export const tinySliderSlides = [
     caption: "Exploring Sigiriya",
   },
 ];
+
+export const getHighQualityImageUrl = (url) => {
+  return url.replace("square60", "square600");
+};
