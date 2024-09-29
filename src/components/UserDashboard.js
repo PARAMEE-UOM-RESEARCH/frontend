@@ -45,7 +45,7 @@ const UserDashboard = ({ location }) => {
         className=" h-auto"
       >
         <div className="demo-logo-vertical" />
-        <Image src="https://i.ibb.co/5nhZ75K/99dc640e-21ac-45fd-bfed-2e61f0d198a2-removebg-preview.png" />
+        <Image src="https://i.ibb.co/WfVB0C2/99dc640e-21ac-45fd-bfed-2e61f0d198a2-removebg-preview.png" />
         <Menu
           theme="dark"
           mode="inline"
@@ -67,7 +67,7 @@ const UserDashboard = ({ location }) => {
             className="text-3xl mt-3 text-center text-[#650D26] font-bold"
             style={{ fontFamily: "Montserrat Alternates" }}
           >
-            InstaStay Hotel Management System
+            VacationWay.com
             <sup
               className="text-sm align-top ml-1"
               style={{

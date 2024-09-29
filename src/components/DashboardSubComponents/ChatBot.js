@@ -50,7 +50,7 @@ const ChatBot = ({ isDeleted, setIsDeleted = () => {}, profile }) => {
         profileAvatar={"https://i.ibb.co/2WH8sKP/bot.png"}
         profileClientAvatar={"https://flowbite.com/docs/images/logo.svg"}
         title="My Chat Assistant"
-        subtitle="InstaStay Hotel Management System"
+        subtitle="VacationWay.com"
         // titleAvatar={"https://flowbite.com/docs/images/logo.svg"}
         resizable={true}
         markAllAsRead

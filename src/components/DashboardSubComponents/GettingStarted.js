@@ -11,11 +11,11 @@ const GettingStarted = ({ handleFocus }) => {
     >
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-black bg-opacity-50">
         <h1 className="text-4xl font-bold text-white mb-4">
-          Welcome to InstaStay
+          Welcome to VacationWay.com
         </h1>
         <p className="text-lg text-white mb-6">
           The ultimate hotel management system designed to streamline your
-          operations. From booking management to guest services, InstaStay
+          operations. From booking management to guest services, VacationWay.com
           simplifies every aspect of running a hotel with power of AI.
         </p>
         <button

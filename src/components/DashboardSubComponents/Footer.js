@@ -4,7 +4,7 @@ import React from "react";
 const Footer = () => {
   return (
     <FooterComponent>
-      <center> Design ©{new Date().getFullYear()} Created by InstaStay</center>
+      <center> Design ©{new Date().getFullYear()} Created by VacationWay.com</center>
     </FooterComponent>
   );
 };
