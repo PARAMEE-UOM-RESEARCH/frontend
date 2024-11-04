@@ -5,6 +5,8 @@ import { handleGetLocation } from "./components/helpers/helper";
 import Footer from "./components/DashboardSubComponents/Footer";
 import { useLocalStorageListner } from "./components/customHooks/useLocalStorageListner";
 import ChatBot from "./components/DashboardSubComponents/ChatBot";
+import PrivateRoute from "./PrivateRoute";
+import AdminDashboard from "./components/AdminDashboard";
 
 function App() {
   const [location, setLocation] = useState({ latitude: null, longitude: null });
@@ -19,9 +21,17 @@ function App() {
 
   return (
     <>
-      {profile && <ChatBot profile={profile}/>}
+      {profile && <ChatBot profile={profile} />}
       <Routes>
         <Route path="/" element={<UserDashboard location={location} />} />
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute adminOnly={true}>
+              <AdminDashboard location={location} />
+            </PrivateRoute>
+          }
+        />
       </Routes>
       <Footer />
     </>

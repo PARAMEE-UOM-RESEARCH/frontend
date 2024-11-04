@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Card, Tag, Spin, Input, Button, Modal, Image, Tooltip } from "antd";
+import {
+  Card,
+  Tag,
+  Spin,
+  Input,
+  Button,
+  Modal,
+  Image,
+  Tooltip,
+  notification,
+} from "antd";
 import {
   EnvironmentOutlined,
   StarOutlined,
@@ -76,14 +86,6 @@ const HotelCard = ({
           <strong>Price per night:</strong> $
           {hotel.composite_price_breakdown.gross_amount.value.toFixed(2)}
         </p>
-        <p>
-          <strong>Mobile Discount:</strong>{" "}
-          {hotel.composite_price_breakdown.discounted_amount?.value.toFixed(2)
-            ? `$${hotel.composite_price_breakdown.discounted_amount?.value.toFixed(
-                2
-              )}`
-            : "N/A"}
-        </p>
         <div className="mt-4 space-x-2">
           {hotel.has_free_parking && (
             <Tag icon={<CarOutlined />} color="green">
@@ -139,11 +141,13 @@ const HotelList = ({ hotels, isLoading, profile, setMenuItem, type }) => {
           tokenResponse.access_token
       )
         .then((response) => response.json())
-        .then((profile) => {
+        .then(async (profile) => {
           console.log("User Profile:", profile);
+          await axios.post(`${REACT_APP_BASE_URL}/register/`, profile);
           localStorage.setItem("profile", JSON.stringify(profile));
           setIsModalVisible(false);
           setMenuItem("5");
+          notification.info({ message: "User Logged in Successfully." });
         })
         .catch((error) => {
           console.error("Error fetching user profile:", error);

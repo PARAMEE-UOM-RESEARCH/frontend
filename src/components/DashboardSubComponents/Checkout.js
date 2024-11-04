@@ -91,16 +91,6 @@ export const Checkout = ({ menuItem, profile }) => {
                 <strong>Price per night:</strong> $
                 {hotel.composite_price_breakdown.gross_amount.value.toFixed(2)}
               </p>
-              <p>
-                <strong>Mobile Discount:</strong>{" "}
-                {hotel.composite_price_breakdown.discounted_amount?.value.toFixed(
-                  2
-                )
-                  ? `$${hotel.composite_price_breakdown.discounted_amount?.value.toFixed(
-                      2
-                    )}`
-                  : "N/A"}
-              </p>
               <div className="mt-4 space-x-2">
                 {hotel.has_free_parking && (
                   <Tag icon={<CarOutlined />} color="green">
@@ -135,6 +125,7 @@ export const Checkout = ({ menuItem, profile }) => {
             <PaymentModal
               visible={isModalVisible}
               onCancel={() => setIsModalVisible(false)}
+              profile={profile}
             />
           </>
         ) : (

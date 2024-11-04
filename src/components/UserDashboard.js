@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Image, Layout, Menu, theme } from "antd";
+import { Button, Form, Image, Layout, Menu, theme } from "antd";
 import { navItems } from "./helpers/helper";
 import TinySliderComponent from "./DashboardSubComponents/TinySlider";
 import GettingStarted from "./DashboardSubComponents/GettingStarted";
@@ -7,6 +7,8 @@ import Hotels from "./DashboardSubComponents/Hotels";
 import { useLocalStorageListner } from "./customHooks/useLocalStorageListner";
 import { Checkout } from "./DashboardSubComponents/Checkout";
 import FavouritePlaces from "./DashboardSubComponents/FavouritePlaces";
+import AdminLoginModal from "./DashboardSubComponents/AdminLoginModal";
+import AdminLoginForm from "./DashboardSubComponents/AdminLoginForm";
 
 const { Header, Content, Sider } = Layout;
 
@@ -16,6 +18,9 @@ const UserDashboard = ({ location }) => {
   } = theme.useToken();
   const [menuItem, setMenuItem] = useState("1");
   const getStartedRef = useRef();
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+  const [form] = Form.useForm();
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   useEffect(() => {}, []);
 
@@ -79,25 +84,36 @@ const UserDashboard = ({ location }) => {
             >
               {location.countryCode}
             </sup>
-            {profile && (
-              <div className=" float-end">
-                <span className=" text-sm cursor-pointer"><u>Admin Login</u></span>&nbsp;&nbsp;
-                <Image
-                  src={profile.picture}
-                  width={40}
-                  height={40}
-                  className=" float-end"
-                  title={"Logged in as " + profile.name}
-                />
-                &nbsp;&nbsp;
-                <Button
-                  className=" float-end"
-                  onClick={() => localStorage.clear()}
-                >
-                  Logout
-                </Button>
-              </div>
-            )}
+            <div className=" float-end">
+              <span
+                className=" text-sm cursor-pointer"
+                onClick={() => setIsAdminModalOpen(true)}
+              >
+                <u>Admin Login</u>
+              </span>
+              {profile && (
+                <>
+                  &nbsp;&nbsp;
+                  <Image
+                    src={profile.picture}
+                    width={40}
+                    height={40}
+                    className=" float-end"
+                    title={"Logged in as " + profile.name}
+                  />
+                  &nbsp;&nbsp;
+                  <Button
+                    className=" float-end"
+                    onClick={() => {
+                      localStorage.clear();
+                      window.location.reload();
+                    }}
+                  >
+                    Logout
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
         </Header>
         <Content
@@ -138,6 +154,20 @@ const UserDashboard = ({ location }) => {
             )}
           </div>
         </Content>
+        <AdminLoginModal
+          title="Admin Login"
+          open={isAdminModalOpen}
+          setIsAdminModalOpen={setIsAdminModalOpen}
+          footer={false}
+          onCancel={() => setIsAdminModalOpen(false)}
+          destroyOnClose={true}
+        >
+          <AdminLoginForm
+            form={form}
+            passwordVisible={passwordVisible}
+            setPasswordVisible={setPasswordVisible}
+          />
+        </AdminLoginModal>
       </Layout>
     </Layout>
   );
