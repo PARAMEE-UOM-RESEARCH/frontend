@@ -19,7 +19,7 @@ const apiKey = REACT_APP_GOOGLE_MAPS_API_KEY;
 function Map({ onLocationChange = () => {}, hotel = null, menuItem = "" }) {
   const [startLocation, setStartLocation] = useState(center); // Initial start point is the center
   const [selectedLocation, setSelectedLocation] = useState(
-    menuItem == 5 && hotel
+    menuItem == 6 && hotel
       ? { lat: hotel.latitude, lng: hotel.longitude }
       : null
   );
@@ -28,7 +28,7 @@ function Map({ onLocationChange = () => {}, hotel = null, menuItem = "" }) {
   const [duration, setDuration] = useState(null);
 
   const containerStyle = {
-    width: menuItem == 5 ? "60%" : "100%",
+    width: menuItem == 6 ? "60%" : "100%",
     height: "400px",
   };
 

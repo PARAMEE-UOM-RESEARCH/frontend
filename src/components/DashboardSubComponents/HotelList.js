@@ -110,7 +110,7 @@ const HotelCard = ({
               if (!profile) {
                 onBookNow(hotel);
               } else {
-                setMenuItem("5");
+                setMenuItem("6");
               }
               localStorage.setItem("hotel", JSON.stringify(hotel));
             }}
@@ -146,7 +146,7 @@ const HotelList = ({ hotels, isLoading, profile, setMenuItem, type }) => {
           await axios.post(`${REACT_APP_BASE_URL}/register/`, profile);
           localStorage.setItem("profile", JSON.stringify(profile));
           setIsModalVisible(false);
-          setMenuItem("5");
+          setMenuItem("6");
           notification.info({ message: "User Logged in Successfully." });
         })
         .catch((error) => {
