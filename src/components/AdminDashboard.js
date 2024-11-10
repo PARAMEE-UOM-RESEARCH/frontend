@@ -25,12 +25,12 @@ const columns = [
     key: "email",
   },
   {
-    title: "Given Name",
+    title: "First Name",
     dataIndex: "given_name",
     key: "given_name",
   },
   {
-    title: "Family Name",
+    title: "Last Name",
     dataIndex: "family_name",
     key: "family_name",
   },
@@ -91,6 +91,7 @@ const transacionColumns = [
     title: "Total Amount",
     dataIndex: "total_amount",
     key: "total_amount",
+    render:(_,record)=> <div>{record.total_amount * record.noOfDays}</div>
   },
   {
     title: "Currency Code",
