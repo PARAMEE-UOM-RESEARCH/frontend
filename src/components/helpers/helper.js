@@ -3,6 +3,7 @@ import {
   EnvironmentOutlined,
   HeartOutlined,
   HomeOutlined,
+  TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { message } from "antd";
@@ -74,6 +75,11 @@ export const navItems = [
   },
   {
     key: "5",
+    icon: <TeamOutlined />,
+    label: "Tourists Places",
+  },
+  {
+    key: "6",
     icon: <EnvironmentOutlined />,
     label: "Map",
   },

@@ -7,6 +7,7 @@ import { useLocalStorageListner } from "./components/customHooks/useLocalStorage
 import ChatBot from "./components/DashboardSubComponents/ChatBot";
 import PrivateRoute from "./PrivateRoute";
 import AdminDashboard from "./components/AdminDashboard";
+import BackToTop from "./BackToTop";
 
 function App() {
   const [location, setLocation] = useState({ latitude: null, longitude: null });
@@ -33,6 +34,7 @@ function App() {
           }
         />
       </Routes>
+      <BackToTop />
       <Footer />
     </>
   );

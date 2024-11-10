@@ -4,7 +4,7 @@ import { ExportOutlined, SettingFilled } from "@ant-design/icons";
 import axios from "axios";
 import PieChartComponent from "./DashboardSubComponents/PieChartComponent";
 import moment from "moment";
-import ExcelJS from 'exceljs';
+import ExcelJS from "exceljs";
 const { REACT_APP_BASE_URL } = process.env;
 
 const columns = [
@@ -91,7 +91,6 @@ const transacionColumns = [
     title: "Total Amount",
     dataIndex: "total_amount",
     key: "total_amount",
-    render:(_,record)=> <div>{record.total_amount * record.noOfDays}</div>
   },
   {
     title: "Currency Code",
@@ -138,7 +137,14 @@ const AdminDashboard = () => {
         .then((res) => setUsers(res.data.users));
       await axios
         .get(`${REACT_APP_BASE_URL}/get-transactions`)
-        .then((res) => setTransactions(res.data.transactions));
+        .then((res) =>
+          setTransactions(
+            res.data.transactions.map((obj) => ({
+              ...obj,
+              total_amount: (obj.total_amount * obj.noOfDays).toFixed(2),
+            }))
+          )
+        );
       await axios
         .get(`${REACT_APP_BASE_URL}/get-favs`)
         .then((res) => setFavourites(res.data.favs));
@@ -163,39 +169,42 @@ const AdminDashboard = () => {
 
   const exportAsExcel = async (data, columns, type) => {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Sheet1');
-  
+    const worksheet = workbook.addWorksheet("Sheet1");
+
     // Create header row with styles
-    const headerRow = worksheet.addRow(columns.map(col => col.title));
-    
+    const headerRow = worksheet.addRow(columns.map((col) => col.title));
+
     // Apply styles to each header cell
     headerRow.eachCell((cell) => {
-      cell.font = { bold: true, color: { argb: 'FF000000' } }; // Black text
+      cell.font = { bold: true, color: { argb: "FF000000" } }; // Black text
       cell.fill = {
-        type: 'pattern', // Use 'pattern' for the fill type
-        pattern: 'solid', // Solid pattern
-        fgColor: { argb: 'FFDDDDDD' } // Light gray background
+        type: "pattern", // Use 'pattern' for the fill type
+        pattern: "solid", // Solid pattern
+        fgColor: { argb: "FFDDDDDD" }, // Light gray background
       };
     });
-  
+
     // Add data rows
-    data.forEach(row => {
-      worksheet.addRow(columns.map(col => row[col.dataIndex]));
+    data.forEach((row) => {
+      worksheet.addRow(columns.map((col) => row[col.dataIndex]));
     });
-  
+
     // Set column widths (optional)
     columns.forEach((col, index) => {
       worksheet.getColumn(index + 1).width = 20; // Set each column width
     });
-  
+
     // Trigger download
     const buffer = await workbook.xlsx.writeBuffer();
-    const blob = new Blob([buffer], { type: 'application/octet-stream' });
+    const blob = new Blob([buffer], { type: "application/octet-stream" });
     const url = URL.createObjectURL(blob);
-    
-    const link = document.createElement('a');
+
+    const link = document.createElement("a");
     link.href = url;
-    link.setAttribute('download', `${type}-${moment().format('DD-MMM-YYYY HH-mm-ss A')}.xlsx`);
+    link.setAttribute(
+      "download",
+      `${type}-${moment().format("DD-MMM-YYYY HH-mm-ss A")}.xlsx`
+    );
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

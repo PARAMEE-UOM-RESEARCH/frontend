@@ -9,6 +9,7 @@ import { Checkout } from "./DashboardSubComponents/Checkout";
 import FavouritePlaces from "./DashboardSubComponents/FavouritePlaces";
 import AdminLoginModal from "./DashboardSubComponents/AdminLoginModal";
 import AdminLoginForm from "./DashboardSubComponents/AdminLoginForm";
+import TouristsPlaces from "./DashboardSubComponents/TouristsPlaces";
 
 const { Header, Content, Sider } = Layout;
 
@@ -148,9 +149,11 @@ const UserDashboard = ({ location }) => {
             ) : menuItem == 4 ? (
               <FavouritePlaces profile={profile} />
             ) : menuItem == 5 ? (
-              <Checkout menuItem={menuItem} profile={profile} />
+              <TouristsPlaces />
             ) : (
-              <></>
+              <>
+                <Checkout menuItem={menuItem} profile={profile} />
+              </>
             )}
           </div>
         </Content>
