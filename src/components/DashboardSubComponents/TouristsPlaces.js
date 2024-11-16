@@ -1,4 +1,4 @@
-import { Input, Spin } from "antd";
+import { Button, Input, Spin } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -8,6 +8,12 @@ const TouristsPlaces = () => {
   const [isPlacesLoading, setIsPlacesLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const headers = {
+    "Content-Type": "application/json",
+    "X-Goog-Api-Key": "AIzaSyBFBLhrwTqyTFBShdwvKGpNc3ngo-OvehU",
+    "X-Goog-FieldMask": "*",
+  };
+
   const fetchTouristsPlaces = async () => {
     try {
       setIsPlacesLoading(true);
@@ -15,39 +21,16 @@ const TouristsPlaces = () => {
         textQuery: "Most attractive tourist places in Sri Lanka",
       };
 
-      const headers = {
-        "Content-Type": "application/json",
-        "X-Goog-Api-Key": "AIzaSyBFBLhrwTqyTFBShdwvKGpNc3ngo-OvehU",
-        "X-Goog-FieldMask": "*",
-      };
-
-      let placesList = [];
       let nextPageToken = null;
 
-      // Loop to fetch 100 places (5 pages, 20 results per page)
-      // for (let i = 0; i < 5; i++) {
-        const { data } = await axios.post(
-          `https://places.googleapis.com/v1/places:searchText`,
-          {
-            ...requestBody,
-            pageToken: nextPageToken, // Include pageToken for subsequent requests
-          },
-          { headers }
-        );
-
-        // placesList = [...placesList, ...data.places];
-
-        // If there's a nextPageToken, set it for the next iteration
-        // nextPageToken = data.nextPageToken;
-
-        // If no nextPageToken, break the loop early (no more results)
-        // if (!nextPageToken) break;
-      // }
-
-      // Remove duplicates based on place.id
-      // const uniquePlaces = [
-        // ...new Map(placesList.map((place) => [place.id, place])).values(),
-      // ];
+      const { data } = await axios.post(
+        `https://places.googleapis.com/v1/places:searchText`,
+        {
+          ...requestBody,
+          pageToken: nextPageToken, // Include pageToken for subsequent requests
+        },
+        { headers }
+      );
 
       setPlaces(data.places); // Set the fetched unique places
       setFilteredPlaces(data.places); // Initialize filteredPlaces
@@ -58,15 +41,24 @@ const TouristsPlaces = () => {
     }
   };
 
-  const handleSearch = (e) => {
-    const query = e.target.value.toLowerCase();
-    setSearchQuery(query);
+  const handleSearch = async () => {
+    setIsPlacesLoading(true);
+    const { data } = await axios.post(
+      `https://places.googleapis.com/v1/places:searchText`,
+      {
+        textQuery:
+          "Most attractive tourist places in Sri Lanka in " + searchQuery,
+        pageToken: null, // Include pageToken for subsequent requests
+      },
+      { headers }
+    );
 
     // Filter places based on the search query
-    const filtered = places.filter((place) =>
-      place.displayName.text.toLowerCase().includes(query)
+    const filtered = data.places.filter((place) =>
+      place.displayName.text.toLowerCase().includes(searchQuery)
     );
     setFilteredPlaces(filtered);
+    setIsPlacesLoading(false);
   };
 
   useEffect(() => {
@@ -82,12 +74,15 @@ const TouristsPlaces = () => {
         <h2 className="text-3xl font-semibold text-gray-800">Tourist Places</h2>
 
         {/* Search Input */}
-        <Input
-          placeholder="Search for tourist places"
-          value={searchQuery}
-          onChange={handleSearch}
-          className="mb-6"
-        />
+        <div className=" flex flex-row justify-evenly">
+          <Input
+            placeholder="Search for tourist places"
+            value={searchQuery}
+            className="mb-6 w-5/6"
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <Button onClick={handleSearch}>Search</Button>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPlaces.length === 0 ? (
@@ -136,7 +131,7 @@ const TouristsPlaces = () => {
                       key={index}
                       className="italic text-sm text-gray-600 mb-2"
                     >
-                      "{getValueOrNA(review.originalText.text)}"
+                      "{getValueOrNA(review.originalText?.text)}"
                     </p>
                   ))}
 
