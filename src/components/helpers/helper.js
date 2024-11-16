@@ -70,13 +70,13 @@ export const navItems = [
   },
   {
     key: "4",
-    icon: <HeartOutlined />,
-    label: "Favourite Places",
+    icon: <TeamOutlined />,
+    label: "Tourism Places",
   },
   {
     key: "5",
-    icon: <TeamOutlined />,
-    label: "Tourists Places",
+    icon: <HeartOutlined />,
+    label: "Favourite Places",
   },
   {
     key: "6",
