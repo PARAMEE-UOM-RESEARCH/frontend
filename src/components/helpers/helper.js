@@ -1,4 +1,5 @@
 import {
+  CarOutlined,
   CoffeeOutlined,
   EnvironmentOutlined,
   HeartOutlined,
@@ -70,7 +71,7 @@ export const navItems = [
   },
   {
     key: "4",
-    icon: <TeamOutlined />,
+    icon: <CarOutlined />,
     label: "Tourism Places",
   },
   {

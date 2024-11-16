@@ -55,7 +55,9 @@ const TouristsPlaces = () => {
 
     // Filter places based on the search query
     const filtered = data.places.filter((place) =>
-      place.displayName.text.toLowerCase().includes(searchQuery)
+      place.displayName.text
+        .toLowerCase()
+        .includes(searchQuery.toLocaleLowerCase())
     );
     setFilteredPlaces(filtered);
     setIsPlacesLoading(false);
@@ -71,7 +73,7 @@ const TouristsPlaces = () => {
   return (
     <Spin spinning={isPlacesLoading}>
       <div className="space-y-6">
-        <h2 className="text-3xl font-semibold text-gray-800">Tourist Places</h2>
+        <h2 className="text-3xl font-semibold text-gray-800">Tourism Places</h2>
 
         {/* Search Input */}
         <div className=" flex flex-row justify-evenly">
@@ -135,16 +137,20 @@ const TouristsPlaces = () => {
                     </p>
                   ))}
 
-                  <p className="text-sm text-blue-500 hover:underline">
-                    <span className="font-semibold">Website: </span>
-                    <a
-                      href={getValueOrNA(place.websiteUri)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {getValueOrNA(place.websiteUri)}
-                    </a>
-                  </p>
+                  {getValueOrNA(place.websiteUri) === "N/A" ? (
+                    <></>
+                  ) : (
+                    <p className="text-sm text-blue-500 hover:underline">
+                      <span className="font-semibold">Website: </span>
+                      <a
+                        href={getValueOrNA(place.websiteUri)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {getValueOrNA(place.websiteUri)}
+                      </a>
+                    </p>
+                  )}
                 </div>
               ))
           )}
