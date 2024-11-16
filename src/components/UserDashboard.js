@@ -56,7 +56,7 @@ const UserDashboard = ({ location }) => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          items={profile ? navItems : navItems.slice(0, 3)}
+          items={profile ? navItems : navItems.slice(0, 4)}
           onSelect={handleMenuItems}
           className=" mt-10 h-dvh"
           selectedKeys={menuItem}
@@ -147,9 +147,9 @@ const UserDashboard = ({ location }) => {
                 type={"restaurant"}
               />
             ) : menuItem == 4 ? (
-              <FavouritePlaces profile={profile} />
-            ) : menuItem == 5 ? (
               <TouristsPlaces />
+            ) : menuItem == 5 ? (
+              <FavouritePlaces profile={profile} />
             ) : (
               <>
                 <Checkout menuItem={menuItem} profile={profile} />
