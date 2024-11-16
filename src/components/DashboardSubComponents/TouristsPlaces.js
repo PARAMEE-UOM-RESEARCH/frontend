@@ -25,7 +25,7 @@ const TouristsPlaces = () => {
       let nextPageToken = null;
 
       // Loop to fetch 100 places (5 pages, 20 results per page)
-      for (let i = 0; i < 5; i++) {
+      // for (let i = 0; i < 5; i++) {
         const { data } = await axios.post(
           `https://places.googleapis.com/v1/places:searchText`,
           {
@@ -35,22 +35,22 @@ const TouristsPlaces = () => {
           { headers }
         );
 
-        placesList = [...placesList, ...data.places];
+        // placesList = [...placesList, ...data.places];
 
         // If there's a nextPageToken, set it for the next iteration
-        nextPageToken = data.nextPageToken;
+        // nextPageToken = data.nextPageToken;
 
         // If no nextPageToken, break the loop early (no more results)
-        if (!nextPageToken) break;
-      }
+        // if (!nextPageToken) break;
+      // }
 
       // Remove duplicates based on place.id
-      const uniquePlaces = [
-        ...new Map(placesList.map((place) => [place.id, place])).values(),
-      ];
+      // const uniquePlaces = [
+        // ...new Map(placesList.map((place) => [place.id, place])).values(),
+      // ];
 
-      setPlaces(uniquePlaces); // Set the fetched unique places
-      setFilteredPlaces(uniquePlaces); // Initialize filteredPlaces
+      setPlaces(data.places); // Set the fetched unique places
+      setFilteredPlaces(data.places); // Initialize filteredPlaces
       setIsPlacesLoading(false);
     } catch (error) {
       console.log("err", error);
